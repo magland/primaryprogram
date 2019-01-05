@@ -1,7 +1,18 @@
+const config_2018 = require("json-loader!yaml-loader!./config/2018.yml");
+const config_2019 = require("json-loader!yaml-loader!./config/2019.yml");
+
+let config={
+  '2018':config_2018,
+  '2019':config_2019
+};
+
 $(document).ready(function() {
   var query = parse_url_params();
   window.query = query;
+  let year=query.year||'2019'
+  let unit=query.unit||'souderton_ward';
 
+  /*
   let boxes = [];
   boxes.push({
     id: 'i-am-a-child-of-god',
@@ -39,8 +50,12 @@ $(document).ready(function() {
     song_title: "If the Savior stood beside me",
     music_url: 'http://broadcast.lds.org/churchmusic/Primary/PR_IfTheSavior_eng.mp3?download=true'
   });
+  */
+
+  let boxes=config[year][unit]['boxes'];
 
   for (let i in boxes) {
+    console.log('BOX:',boxes[i]);
     let box = boxes[i];
     let div = $(`<div class=songbox id=${box.id} />`);
     let img = $(`<img src="${box.image_url}"></img>`);
@@ -55,8 +70,7 @@ $(document).ready(function() {
     setup_box(box, div);
   }
 
-
-  {
+  if (year=='2018') {
     let div=$(`<div class=songbox />`);
     div.append(`<h3>Unlocked scriptures</h3>`);
     let ul=$('<ul />');
@@ -138,7 +152,7 @@ $(document).ready(function() {
     if (!message) {
       $('#status').html(`
         <div class="alert alert-primary">
-        Primary program songs 2018
+        Primary program songs ${year} - ${unit}
         </div>
       `);
     }
@@ -220,7 +234,7 @@ $(document).ready(function() {
   function get_record() {
     let rec={};
     try {
-      rec = JSON.parse(localStorage['primaryprogram_record']) || {};
+      rec = JSON.parse(localStorage['primaryprogram_record_'+unit]) || {};
       if (typeof(rec) != 'object')
         rec = {};
     } catch (err) {
@@ -231,7 +245,7 @@ $(document).ready(function() {
 
   function set_record(rec) {
     try {
-      localStorage['primaryprogram_record'] = JSON.stringify(rec);
+      localStorage['primaryprogram_record_'+unit] = JSON.stringify(rec);
     } catch (err) {
 
     }

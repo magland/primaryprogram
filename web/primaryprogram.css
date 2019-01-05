@@ -20,6 +20,7 @@ div.songbox {
 	height:500px;
 	background: lightblue;
 	border-radius: 10px;
+	overflow: hidden;
 }
 
 div.songbox img {

@@ -24,7 +24,9 @@
     "downloadjs": "^1.4.7",
     "express": "^4.16.3",
     "jquery": "^3.3.1",
-    "mongodb": "^3.1.1"
+    "mongodb": "^3.1.1",
+    "yaml-loader": "latest",
+    "json-loader": "latest"
   },
   "author": "Jeremy Magland",
   "license": "Apache-2.0",
